@@ -1,8 +1,11 @@
+import com.codeborne.selenide.Selenide;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-public class Auth extends SelenideSetup {
+public class AuthTest extends SelenideSetup {
     /**
      * Тестовый кейс №1:
      * <p>
@@ -19,10 +22,10 @@ public class Auth extends SelenideSetup {
 
     @Test
     public void test() {
+
         String user = "Avtotest";
         String password = "123456";
         String errorText = "Ошибка аутентификации.\nПроверьте правильность указания логина и пароля.";
-        String blockedText = "Вы ввели неправильный логин / пароль 3 раза. В целях безопасности вход в систему ограничен. Повторите попытку через 14 мин 59 сек.";
         String blockedTextContains = "Вы ввели неправильный логин / пароль 3 раза. В целях безопасности вход в систему ограничен. Повторите попытку через 14 мин 5";
 
         LoginPage page = new LoginPage();
@@ -31,14 +34,13 @@ public class Auth extends SelenideSetup {
         String error = page.getErrorMessage();
         assertEquals("Проверка сообщения об ошибке", errorText, error);
 
-        //Точно 3 раза?
         for (int i = 0; i < 3; i++) {
             page.inputPassword(password);
             page.clickOnButton();
+            Selenide.sleep(2000L);
         }
 
         error = page.getErrorMessage();
-        assertEquals("Проверка сообщения об ошибке", blockedText, error);
-//        assertTrue(error.contains(blockedTextContains));
+        assertTrue(error.contains(blockedTextContains));
     }
 }
