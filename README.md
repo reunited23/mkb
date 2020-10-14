@@ -3,7 +3,7 @@ MKB exercise
 
 Test case №1:
 
-     1. Navigate to https://online.mkb.ru (https://online.mkb.ru/)
+     1. Navigate to https://online.mkb.ru
      2. Page should load within 10 sec
      3. Type login Avtotest
      4. Type password 123456
